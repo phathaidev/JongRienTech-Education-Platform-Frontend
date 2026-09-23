@@ -1,4 +1,4 @@
-import { getToken } from "../api/login";
+import { getToken } from "../api/request";
 import Login from "./login";
 
 function HomePage() {

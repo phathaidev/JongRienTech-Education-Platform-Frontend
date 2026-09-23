@@ -13,7 +13,7 @@ export function setToken(token) {
 }
 
 // To make a request templete for api requests
-async function request(endpoint, options = {}) {
+export async function request(endpoint, options = {}) {
     const token = getToken();
 
     const res = await fetch(`${BASE_URL}${endpoint}`, {
@@ -33,12 +33,4 @@ async function request(endpoint, options = {}) {
     }
 
     return data;
-}
-
-// To request to the login api
-export function login(email, password) {
-    return request('/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password })
-    });
 }

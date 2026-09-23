@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { login, setToken } from "../api/login";
-import { useNavigate, useLocation } from "react-router-dom";
+import { login } from "../api/auth";
+import { setToken } from "../api/request";
+import { useNavigate } from "react-router-dom";
 import "../css/login.css";
-function Login({ onLoginSuccess }) {
+
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,12 +17,9 @@ function Login({ onLoginSuccess }) {
     setLoading(true);
 
     try {
-      console.log(email, password);
       const data = await login(email, password);
       setToken(data.token);
-      console.log("about to navigate"); // add this
       navigate("/");
-      onLoginSuccess(data.user);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -29,9 +28,7 @@ function Login({ onLoginSuccess }) {
   };
 
   const handleSwithToSignup = () => {
-    // const navigate1 = useNavigate();
     navigate("/signup");
-    console.log("to signup");
   };
   return (
     <>
@@ -39,7 +36,9 @@ function Login({ onLoginSuccess }) {
         <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
             <h1 className="form-title">Sign in</h1>
-            {error && <p>{error}</p>}
+
+            {error && <p className="text-danger">{error}</p>}
+
             <input
               type="email"
               placeholder="Email"
@@ -56,7 +55,7 @@ function Login({ onLoginSuccess }) {
               required
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit">Sign Up</button>
+            <button type="submit">Sign In</button>
           </form>
         </div>
         <div className="overlay-container">
